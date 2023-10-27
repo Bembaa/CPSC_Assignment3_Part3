@@ -1,0 +1,106 @@
+#1. Data Preparation
+#Load the library and dataset
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.formula.api as sm
+from sklearn.linear_model import LinearRegression
+
+train = pd.read_csv('train.csv')
+train.shape
+
+
+train.head(5)
+
+
+
+train.describe().round(0)
+#The dataset named 'Train.csv' consists of 81 variables and 1,460 indices in each column.
+
+
+**Missing Values Calculation**
+missing_values = train.isnull().sum()
+
+missing_values[missing_values > 0]
+missing_values[missing_values > 0].shape
+
+#There are 19 out of 81 variables that include missing values. We do not use these variables for the analysis
+
+
+
+
+
+#2. Analyzing Numerical Variables
+
+#Draw a Histogram and boxplot for SalePrice
+#We are interested in 'SalePrice' as the dependent variable
+
+plt.figure(figsize=(16, 10))
+sns.histplot(x=train['SalePrice'], bins=50)
+
+plt.title('Distribution of SalePrice')
+plt.show()
+
+plt.boxplot(train['SalePrice'])
+ 
+# show plot
+plt.show()
+
+#Based on the histogram and boxplot, we can observe that the distribution of 'SalePrice' is right-skewed and contains outliers, which have an impact on both the variation and the mean.
+
+
+
+#Correlation matrix
+
+f = plt.figure(figsize=(19, 15))
+plt.matshow(train.corr(), fignum=f.number)
+plt.xticks(range(train.select_dtypes(['number']).shape[1]), train.select_dtypes(['number']).columns, fontsize=14, rotation=45)
+plt.yticks(range(train.select_dtypes(['number']).shape[1]), train.select_dtypes(['number']).columns, fontsize=14)
+cb = plt.colorbar()
+cb.ax.tick_params(labelsize=14)
+plt.title('Correlation Matrix', fontsize=16);
+
+
+#Sort all correlation coefficients related to SalePrice
+corr_matrix=train.corr()
+print(corr_matrix['SalePrice'].sort_values(ascending=False))
+
+
+#For the 'SalePrice' as a dependent variable we can see that there are strong positive correlations, such as with 'OverallQual'(Material and finish quality) and 'GrLivArea' (Ground living area), indicate factors that positively impact. Conversely, 'KitchenAbvGr'(Number of kitchens) and 'EnclosedPorch'(Area), suggest factors that negatively influence sale prices.
+
+#Draw pairplot for comparing relationship between variables
+
+
+sns.pairplot(train[['SalePrice', 'OverallQual', 'GrLivArea']])
+plt.show()
+
+
+#Conclusion for Numerical Analysis:
+Both the overall quality of a property ('OverallQual') and the size of the living area ('GrLivArea') are positively associated with higher sale prices ('SalePrice')
+
+Outliers in 'GrLivArea' vs. 'SalePrice' might be worth investigating further.
+
+'SalePrice' is positively skewed, with a tail extending towards higher prices. This suggests that more properties have sale prices on the lower end, while relatively fewer have very high sale prices.
+
+The scatterplots show that 'SalePrice' relationships with 'OverallQual' and 'GrLivArea' could potentially be modeled with linear regression. This suggests that these variables might be good candidates for predicting sale prices.
+
+
+
+#3. Analyzing Categorical Variables
+categorical = train[['CentralAir', 'SaleCondition','Heating']]
+
+fig, ax = plt.subplots(1, 3, figsize=(15, 10))
+for var, subplot in zip(categorical, ax.flatten()):
+    sns.boxplot(x=var, y='SalePrice', data=train, ax=subplot)
+
+
+Conclusion for Categorical Analysis¶
+The highest sale prices are typically associated with properties that have central air conditioning (CentralAir: Yes) or are in a 'Partial' sale condition. We can observe a few outliers in each category, except for the 'SaleCondition' category, which is 'AdLand'.
+
+
+
+
+
+
