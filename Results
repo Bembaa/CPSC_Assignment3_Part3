@@ -1,0 +1,26 @@
+#The dataset named 'Train.csv' consists of 81 variables and 1,460 indices in each column.
+#There are 19 out of 81 variables that include missing values. We do not use these variables for the analysis
+#We are interested in 'SalePrice' as the dependent variable
+#Based on the histogram and boxplot, we can observe that the distribution of 'SalePrice' is right-skewed and contains outliers, which have an impact on both the variation and the mean.
+#For the 'SalePrice' as a dependent variable we can see that there are strong positive correlations, such as with 'OverallQual'(Material and finish quality) and 'GrLivArea' (Ground living area), indicate factors that positively impact. Conversely, 'KitchenAbvGr'(Number of kitchens) and 'EnclosedPorch'(Area), suggest factors that negatively influence sale prices.
+
+#Conclusion for Numerical Analysis:
+#Both the overall quality of a property ('OverallQual') and the size of the living area ('GrLivArea') are positively associated with higher sale prices ('SalePrice')
+
+#Outliers in 'GrLivArea' vs. 'SalePrice' might be worth investigating further.
+
+#'SalePrice' is positively skewed, with a tail extending towards higher prices. This suggests that more properties have sale prices on the lower end, while relatively fewer have very high sale prices.
+
+#The scatterplots show that 'SalePrice' relationships with 'OverallQual' and 'GrLivArea' could potentially be modeled with linear regression. This suggests that these variables might be good candidates for predicting sale prices.
+
+
+
+#Conclusion for Categorical Analysis
+#The highest sale prices are typically associated with properties that have central air conditioning (CentralAir: Yes) or are in a 'Partial' sale condition. We can observe a few outliers in each category, except for the 'SaleCondition' category, which is 'AdLand'.
+
+
+
+
+
+
+
